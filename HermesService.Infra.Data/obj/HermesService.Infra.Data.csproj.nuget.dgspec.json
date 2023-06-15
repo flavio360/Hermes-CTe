@@ -1,0 +1,178 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\flavio.lopes\\Documents\\Projeto GIT\\hermes\\HermesService.Infra.Data\\HermesService.Infra.Data.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\flavio.lopes\\Documents\\Projeto GIT\\hermes\\HermesService.Domain\\HermesService.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\flavio.lopes\\Documents\\Projeto GIT\\hermes\\HermesService.Domain\\HermesService.Domain.csproj",
+        "projectName": "HermesService.Domain",
+        "projectPath": "C:\\Users\\flavio.lopes\\Documents\\Projeto GIT\\hermes\\HermesService.Domain\\HermesService.Domain.csproj",
+        "packagesPath": "C:\\Users\\flavio.lopes\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\flavio.lopes\\Documents\\Projeto GIT\\hermes\\HermesService.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\flavio.lopes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.123, )"
+            },
+            "Dapper.Contrib": {
+              "target": "Package",
+              "version": "[2.0.78, )"
+            },
+            "MSTest.TestFramework": {
+              "target": "Package",
+              "version": "[2.2.3, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[5.0.14, )"
+            },
+            "System.ComponentModel.Annotations": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "System.Configuration.ConfigurationManager": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            },
+            "System.Security.Cryptography.Xml": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.411\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\flavio.lopes\\Documents\\Projeto GIT\\hermes\\HermesService.Infra.Data\\HermesService.Infra.Data.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\flavio.lopes\\Documents\\Projeto GIT\\hermes\\HermesService.Infra.Data\\HermesService.Infra.Data.csproj",
+        "projectName": "HermesService.Infra.Data",
+        "projectPath": "C:\\Users\\flavio.lopes\\Documents\\Projeto GIT\\hermes\\HermesService.Infra.Data\\HermesService.Infra.Data.csproj",
+        "packagesPath": "C:\\Users\\flavio.lopes\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\flavio.lopes\\Documents\\Projeto GIT\\hermes\\HermesService.Infra.Data\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\flavio.lopes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {
+              "C:\\Users\\flavio.lopes\\Documents\\Projeto GIT\\hermes\\HermesService.Domain\\HermesService.Domain.csproj": {
+                "projectPath": "C:\\Users\\flavio.lopes\\Documents\\Projeto GIT\\hermes\\HermesService.Domain\\HermesService.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.123, )"
+            },
+            "MSTest.TestFramework": {
+              "target": "Package",
+              "version": "[2.2.3, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[5.0.14, )"
+            },
+            "System.Configuration.ConfigurationManager": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            },
+            "System.Security.Cryptography.Xml": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.411\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

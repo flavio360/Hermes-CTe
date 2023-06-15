@@ -1,0 +1,19 @@
+-------------INSTALAR SERVIÇO HERMES
+
+cd \\diretório do projeto que o serviço ficarrá alocado
+
+installutil "nomeprojeto".exe
+
+
+------------PARAR SERVIÇO HERMES
+
+TASKKILL /f /IM  + "servico".exe
+
+
+
+
+------------DESINSTALAR O SERVIÇO HERMES
+
+
+Sc delete + "servico"
+

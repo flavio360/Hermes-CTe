@@ -1,0 +1,3 @@
+﻿Não criar novas utilidades nesta pasta!
+o que foi ciado aqui conceitualmente esta errado! 
+o que esta aqui, devem ser movidos e novas classes criadas emm  "Utilities " da camada "Domain".
