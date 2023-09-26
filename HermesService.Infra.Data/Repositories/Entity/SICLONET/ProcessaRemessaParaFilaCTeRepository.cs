@@ -27,7 +27,7 @@ namespace HermesService.Infra.Data.Repositories.Entity.SICLONET
                                         "ORDER BY " +
                                             "A.cte_numero DESC " + 
                                         "LIMIT " +
-                                            "1;", Codcliente, Codcliente);
+                                            "1;", Codcliente);
             #endregion
 
             var retorno = SqlMapper.Query<string>(Connection, sql).AsList();

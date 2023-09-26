@@ -82,10 +82,15 @@ namespace HermesService.Infra.Data.Repositories.Entity.SICLONET
             #endregion
 
             try
-            {                
+            {
+
                 query = string.Format(query, 
                                         xmlResponse.cte_status,
-                                        xmlResponse.cte_data_registro_ret_sefaz == null ? "01/01/1900" : xmlResponse.cte_data_registro_ret_sefaz,
+                                        //xmlResponse.cte_data_registro_ret_sefaz != null ? DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") : xmlResponse.cte_data_registro_ret_sefaz,
+                                        xmlResponse.cte_data_registro_ret_sefaz =       string.IsNullOrEmpty(xmlResponse.cte_data_registro_ret_sefaz)
+                                        ? DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")
+                                        : xmlResponse.cte_data_registro_ret_sefaz,
+
                                         xmlResponse.cte_protocolo_sefaz == null ? "null":xmlResponse.cte_protocolo_sefaz,
                                         xmlResponse.cte_verAplic,
                                         xmlResponse.cte_status,

@@ -116,7 +116,8 @@ namespace HermesService.Domain.Utilities
         public enum STATUS_CTE_IL
         {
             PendenteEnvio = 1,
-            Enviado = 2
+            Enviado = 2,
+            Inconsistencia = 3
         }
 
         public enum INCOSISTENCIA_DADOS

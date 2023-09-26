@@ -35,15 +35,26 @@ namespace HermesService.Domain.Service
                 objDest.xBairro = "BAIRRO NAO CADASTRADO";
             }
 
+            
+            string tpDoc = "CPF";
+            if (objDest.Cpf.Length == 14)
+            {
+                tpDoc = "CNPJ";
+            }
+            if (string.IsNullOrEmpty(objDest.nro.Replace(" ","")))
+            {
+                objDest.nro = "S/N";
+            }
+
 
             XElement xmlSec = new XElement("dest",
-                              new XElement("CPF", objDest.Cpf),
+                              new XElement(tpDoc, objDest.Cpf),
                               new XElement("IE", "ISENTO"),
                               new XElement("xNome", objDest.xNome),
-                              new XElement("fone", objDest.fone),
+                              string.IsNullOrEmpty(objDest.fone) ? null : new XElement("fone", objDest.fone),
                               new XElement("enderDest",
                               new XElement("xLgr", objDest.xLgr.Trim()),
-                              new XElement("nro", "10"),
+                              new XElement("nro", objDest.nro),                              
                               new XElement("xBairro", objDest.xBairro),
                               new XElement("cMun", objDest.cMun),
                               new XElement("xMun", objDest.xMun),
@@ -51,6 +62,7 @@ namespace HermesService.Domain.Service
                               new XElement("UF", objDest.Uf),
                               new XElement("cPais", (int)CTEEnums.CodigoPais.Brasil),
                               new XElement("xPais", CTEEnums.CodigoPais.Brasil)));
+
 
             return xmlSec.ToString();
              
@@ -60,23 +72,27 @@ namespace HermesService.Domain.Service
         #region <exped>
         public string FormataTagExped(ExpedDTO objExped)
         {
+            if (string.IsNullOrEmpty(objExped.nro))
+            {
+                objExped.nro = "S/N";
+            }
             try
             {
                 XElement xmlSec =
                         new XElement("exped",
-                            new XElement("CNPJ", "11497307000166"),
-                            new XElement("IE", "258951486"),
-                            new XElement("xNome", "CT-E EMITIDO EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"),
-                            new XElement("fone", "11999999999"),
+                            new XElement("CNPJ", objExped.CNPJ),// "11497307000166"),
+                            new XElement("IE", objExped.IE), //"258951486"),
+                            new XElement("xNome", objExped.xNome),//"CT-E EMITIDO EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"),
+                            new XElement("fone", objExped.fone),//"11999999999"),
                         new XElement("enderExped",
-                            new XElement("xLgr", "R ANFILOQUIO NUNES PIRES DE 2702 A 4440 LADO PAR"),
-                            new XElement("nro", "3500"),
+                            new XElement("xLgr", objExped.xLgr), // "R ANFILOQUIO NUNES PIRES DE 2702 A 4440 LADO PAR"),
+                            new XElement("nro", objExped.nro), // "3500"),
                             new XElement("xCpl", objExped.nro == null ? "S/N" : objExped.nro),
-                            new XElement("xBairro", "BELA VISTA"),
-                            new XElement("cMun", "4205902"),
-                            new XElement("xMun", "Gaspar"),
-                            new XElement("CEP", "89110645"),
-                            new XElement("UF", "SC"),
+                            new XElement("xBairro", objExped.xBairro), //"BELA VISTA"),
+                            new XElement("cMun", objExped.cMun), // "4205902"),
+                            new XElement("xMun", objExped.xMun),//"Gaspar"),
+                            new XElement("CEP", objExped.CEP), //"89110645"),
+                            new XElement("UF", objExped.UF), // "SC"),
                             new XElement("cPais", (int)CTEEnums.CodigoPais.Brasil),
                             new XElement("xPais", CTEEnums.CodigoPais.Brasil)));
 
@@ -93,6 +109,12 @@ namespace HermesService.Domain.Service
         #region <emit>
         public string FormataTagEmit(EmitDTO objEmit)
         {
+
+            if (string.IsNullOrEmpty(objEmit.nro))
+            {
+                objEmit.nro = "S/N";
+            }
+
             XElement xmlSec =
             new XElement("emit",
                 new XElement("CNPJ", objEmit.CNPJ),
@@ -102,18 +124,17 @@ namespace HermesService.Domain.Service
             new XElement("enderEmit",
                 new XElement("xLgr", objEmit.xLgr),
                 new XElement("nro", objEmit.nro),
+               // !string.IsNullOrEmpty(objEmit.nro) ? new XElement("nro", objEmit.nro) : null,
                 new XElement("xBairro", objEmit.xBairro),
                 new XElement("cMun", objEmit.cMun),
                 new XElement("xMun", objEmit.xMun),
                 new XElement("CEP", objEmit.CEP),
                 new XElement("UF", objEmit.UF),
-                new XElement("fone", "0000000000")));            
+                //new XElement("fone", objEmit.fone)));
+                !string.IsNullOrEmpty(objEmit.fone) ? new XElement("fone", objEmit.fone) : null));
 
 
-            if (objEmit.nro == null)
-            {
-                xmlSec.Element("enderEmit").Element("nro").Remove();
-            }
+
 
             return xmlSec.ToString();
         }
@@ -190,7 +211,8 @@ namespace HermesService.Domain.Service
                 new XElement("IE", objRem.IE),
                 new XElement("xNome", objRem.xNome),
                 new XElement("xFant", objRem.xNome),
-                new XElement("fone", "0000000000"),
+                //new XElement("fone", objRem.fone),
+                !string.IsNullOrEmpty(objRem.fone) ? new XElement("fone", objRem.fone) : null,
             new XElement("enderReme",
                 new XElement("xLgr", objRem.xLgr),
                 new XElement("nro", objRem.nro == null ? "S/N" : objRem.nro),
@@ -228,6 +250,12 @@ namespace HermesService.Domain.Service
         #region Tags <autXML>| <tagCompl> | <infCteComp>
         public Tuple<string, string, string> FormataTagXMLCondicional(Entregas_cte_dados_gerados_detalhe objDetalhe)
         {
+
+            if (string.IsNullOrEmpty(objDetalhe.Numero_Emit))
+            {
+                objDetalhe.Numero_Emit = "S/N";
+            }
+
             var xmlSec =
                 new XElement("receb",
                     new XElement("CNPJ", objDetalhe.CNPJ_Emissor),
@@ -242,7 +270,8 @@ namespace HermesService.Domain.Service
                     new XElement("xMun", objDetalhe.Cidade_Emit),
                     new XElement("CEP", objDetalhe.Cep_Emit),
                     new XElement("UF", objDetalhe.Emitente_uf),
-                    new XElement("fone", "0000000000"))).ToString();
+            //new XElement("fone", objDetalhe.Destinatario_telefone))).ToString();
+            !string.IsNullOrEmpty(objDetalhe.Destinatario_telefone) ? new XElement("fone", objDetalhe.Destinatario_telefone) : null)).ToString();
                  // --1
                  var tagAutXML =
                      new XElement("autXML",
@@ -319,8 +348,9 @@ namespace HermesService.Domain.Service
         public string FormataTagInfCTeNorm(Entregas_cte_dados_gerados_detalhe objDetalhe)
         {
             string ret = string.Empty;
-            
-            string peso = objDetalhe.Peso_arquivo.ToString().Replace(",",".").PadRight(6,'0');
+
+            string peso = objDetalhe.Peso_arquivo.ToString("0.0000").Replace(",", ".");
+
             switch (objDetalhe.Cte_tipo)
             {
              

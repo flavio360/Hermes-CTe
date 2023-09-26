@@ -75,11 +75,13 @@ namespace HermesService.Application.AutoMapper.TypeConvert.CTe
             {
 
                 destination.Cpf = source.Destinatario_cpf;
-                destination.IE = " ";
+                destination.IE = string.Empty;
                 destination.xNome = trata.RemoveDiacriticas(source.Destinatario_nome);
-                destination.fone = source.Destinatario_telefone;
+                //destination.fone = source.Destinatario_telefone ?? null;
+                destination.fone = source.Destinatario_telefone == "null" ? null : source.Destinatario_telefone;
+
                 destination.xLgr = trata.RemoveDiacriticas(source.Destinatario_endereco);
-                destination.nro = " ";
+                destination.nro = string.Empty;
                 destination.xBairro = trata.RemoveDiacriticas(source.Destinatario_bairro);
                 destination.cMun = source.Destinatario_cidade_cod_ibge;
                 destination.xMun = trata.RemoveDiacriticas(source.Destinatario_cidade);
@@ -113,8 +115,8 @@ namespace HermesService.Application.AutoMapper.TypeConvert.CTe
                 destination.xLgr = trata.RemoveDiacriticas(source.Remetente_endereco);
                 destination.IE = source.IE_OrigemColeta;
                 destination.xNome = source.Remetente_nome;
-                destination.fone = source.Remetente_telefone;
-                destination.nro = "10";
+                destination.fone = source.Remetente_telefone == "null" ? null : source.Remetente_telefone;
+                destination.nro =  "S/N";
                 destination.xMun = trata.RemoveDiacriticas(source.CidadeOrigemColeta);
 
                 return destination;

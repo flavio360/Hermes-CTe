@@ -29,6 +29,7 @@ namespace HermesService.Application.Service
         private readonly ICommunicationSefazService _CommunicationSefazService;
         private readonly ICte_endereco_web_serviceService _Cte_endereco_web_service;
         private readonly IEntregas_cte_transmitidoService _Entregas_cte_transmitido;
+        private readonly IEntregas_fila_cteService _Entregas_fila_cteService;
         List<cte_endereco_web_service> objWS = null;
         X509Certificate2 certif = null;
         string execProd = string.Empty;
@@ -41,8 +42,9 @@ namespace HermesService.Application.Service
             IMontaXMLCTeService MontaXMLCTeService,
             ICommunicationSefazService CommunicationSefazService,
             ICte_endereco_web_serviceService Cte_endereco_web_service,
-            IEntregas_cte_transmitidoService Entregas_cte_transmitido
-            
+            IEntregas_cte_transmitidoService Entregas_cte_transmitido,
+            IEntregas_fila_cteService Entregas_fila_cteService
+
         )
         {
             _RecuperaFiliaisEmissorasAtivasSerivce = RecuperaFiliaisEmissorasAtivasSerivce;
@@ -52,6 +54,7 @@ namespace HermesService.Application.Service
             _CommunicationSefazService = CommunicationSefazService;
             _Cte_endereco_web_service = Cte_endereco_web_service;
             _Entregas_cte_transmitido = Entregas_cte_transmitido;
+            _Entregas_fila_cteService = Entregas_fila_cteService;
         }
         #endregion
 
@@ -90,8 +93,8 @@ namespace HermesService.Application.Service
                         //    itemXML.Cte_tipo = "5";
                         //}
 
-                        if (itemXML.Cte_tipo == "0")
-                        {
+                        //if (itemXML.Cte_tipo == "0")
+                        //{
                             objIde = MapperFactory.Mapper?.Map<Entregas_cte_dados_gerados_detalhe, IdeDTO>(itemXML);
                             objEmit    = MapperFactory.Mapper?.Map<Entregas_cte_dados_gerados_detalhe, EmitDTO>(itemXML);
                             objRem     = MapperFactory.Mapper?.Map<Entregas_cte_dados_gerados_detalhe, RemDTO>(itemXML);
@@ -99,7 +102,7 @@ namespace HermesService.Application.Service
                             objDest    = MapperFactory.Mapper?.Map<Entregas_cte_dados_gerados_detalhe, DestDTO>(itemXML);
                             objVPrest  = MapperFactory.Mapper?.Map<Entregas_cte_dados_gerados_detalhe, VPrestDTO>(itemXML);
                             objImp     = MapperFactory.Mapper?.Map<Entregas_cte_dados_gerados_detalhe, ImpDTO>(itemXML); 
-                        }
+                        //}
 
                         #region Em status de debug força operar em Homologação
                         if (System.Diagnostics.Debugger.IsAttached)
@@ -137,13 +140,17 @@ namespace HermesService.Application.Service
                             if (item.SerialNumber != null && item.SerialNumber.ToUpper().Equals(serial.ToUpper(), StringComparison.InvariantCultureIgnoreCase))
                             {
                                 certif = item;
+                                break;
                             }
                         }
 
                         #region Disntingue se CTe emissão,  cancelamento, carta de correção . 
 
 
-
+                        if (itemXML.Cte_status == "100")
+                        {
+                            itemXML.Cte_tipo = "NFS";
+                        }
 
                         switch (itemXML.Cte_tipo)
                         {
@@ -199,7 +206,10 @@ namespace HermesService.Application.Service
 
                             if (retr != string.Empty)
                             {
+                                var objReposnse = ResponseSefaz.StringToObjReceivedSefaz(retr, itemXML);
                                 _Entregas_cte_transmitido.TreatRecordResponseRecepcao(retr, itemXML);
+
+                                _Entregas_fila_cteService.UpdateEntregas_Fila_Ctes(itemXML, objReposnse);
                                 //WriteFile.WriteXMLCTe(xmlEnvio, itemXML.Cte_chave); 
                             }
                         }

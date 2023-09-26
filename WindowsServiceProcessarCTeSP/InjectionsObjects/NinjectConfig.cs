@@ -46,7 +46,8 @@ namespace WindowsServiceProcessarCTeSP.InjectionsObjects
             NinjectKernel.Bind<ICommunicationSefazService>().To<CommunicationSefazService>();
             NinjectKernel.Bind<ICte_endereco_web_serviceService>().To<Cte_endereco_web_serviceService>();
             NinjectKernel.Bind<IEntregas_cte_transmitidoService>().To<Entregas_cte_transmitidoService>();
-            NinjectKernel.Bind<IEntregas_cte_envio_ftpService>().To<Entregas_cte_envio_ftpService>();
+            NinjectKernel.Bind<IEntregas_cte_envio_ftpService>().To<Entregas_cte_envio_ftpService>(); 
+            NinjectKernel.Bind<IEntregas_fila_cteService>().To<Entregas_fila_cteService>(); 
 
 
 
@@ -61,7 +62,8 @@ namespace WindowsServiceProcessarCTeSP.InjectionsObjects
             NinjectKernel.Bind<IEntregas_cte_erroRepository>().To<entregas_cte_erroRepository>();
             NinjectKernel.Bind<ICte_endereco_web_serviceRepository>().To<Cte_endereco_web_serviceRepository>();
 
-            NinjectKernel.Bind<IEntregas_cte_transmitidoRepository>().To<Entregas_cte_transmitidoRepository>();
+            NinjectKernel.Bind<IEntregas_cte_transmitidoRepository>().To<Entregas_cte_transmitidoRepository>(); 
+            NinjectKernel.Bind<IEntregas_fila_cteRepository>().To<Entregas_fila_cteRepository>(); 
 
 
 

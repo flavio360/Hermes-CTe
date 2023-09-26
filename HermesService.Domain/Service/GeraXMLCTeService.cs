@@ -96,9 +96,10 @@ namespace HermesService.Domain.Service
                 var propGerais = _MontaXMLCTe.FormataTagXMLCondicional(objDetalhe);
 
                 var tpCTe = ((int)(CTEEnums.TipoCTe.Complementar)).ToString();
+
                 if (objDetalhe.Cte_tipo == tpCTe)
                 {
-                    cteComplementar = _MontaXMLCTe.
+                    cteComplementar = _MontaXMLCTe.FormataTagComplementar(objDetalhe);
                 }
 
                 var xml = _MontaXMLCTe.FormataXMLFinal(propGerais.Item2, propGerais.Item1, propInfCTeNorm, propDest, propExped, propRem, propIde, propImp, propEmit, propVPrest, objDetalhe, propGerais);
@@ -192,6 +193,7 @@ namespace HermesService.Domain.Service
                 }
                 else
                 {
+                    
                     _Entregas_cte_envio_ftp.Grava_entregas_cte_envio_ftp(xmlFormat, null, objDetalhe);
                 }  
 

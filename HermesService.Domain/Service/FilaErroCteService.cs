@@ -1,4 +1,5 @@
-﻿using HermesService.Domain.Context;
+﻿using Dapper;
+using HermesService.Domain.Context;
 using HermesService.Domain.Entity;
 using HermesService.Domain.Entity.SICLONET;
 using HermesService.Domain.Interfaces.Repositories.Entity.SICLONET;
@@ -28,25 +29,25 @@ namespace HermesService.Domain.Service
         #endregion
 
 
-        public void GravaFilaErroCte(List<Entregas_cte_erro> entregas_Cte_Erros)
+        public void GravaFilaErroCte(DynamicParameters entregas_Cte_Erros)
         {
             //#TODO Rever a ordem de instancia da sessao a base com o foreach
-            foreach (var item in entregas_Cte_Erros)
+
+                //var objErro = new entregas_Cte_Erros();
+            using (DalSession dalSession = new DalSession())
             {
-                using (DalSession dalSession = new DalSession())
+                UnitOfWork UoW = dalSession.UnitOfWork;
+                try
                 {
-                    UnitOfWork UoW = dalSession.UnitOfWork;
-                    try
-                    {
-                        _FilaErroCteService.InstanciarUnidade(UoW);
-                        _FilaErroCteService.GravaFilaErroCte(entregas_Cte_Erros);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
+                    _FilaErroCteService.InstanciarUnidade(UoW);
+
+                    _FilaErroCteService.GravaFilaErroCte(entregas_Cte_Erros);
                 }
-            }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }            
         }
 
         public void GravaErroCte(string cod_entrega, string observacao_erro, string cod_cte_id = null)
@@ -57,7 +58,7 @@ namespace HermesService.Domain.Service
                 try
                 {
                     _FilaErroCteService.InstanciarUnidade(UoW);
-                    _FilaErroCteService.GravaErroCte(cod_entrega, observacao_erro,null);
+                    _FilaErroCteService.GravaErroCte(cod_entrega, observacao_erro, cod_cte_id);
                 }
                 catch (Exception ex)
                 {

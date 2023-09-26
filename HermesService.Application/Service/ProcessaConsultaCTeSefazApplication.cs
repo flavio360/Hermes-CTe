@@ -86,11 +86,15 @@ namespace HermesService.Application.Service
                         }
                         else
                         {
-                            _FilaErroCteService.GravaErroCte(item.cod_entrega, objResponse.cte_status, null);
+                            _FilaErroCteService.GravaErroCte(item.cod_entrega, objResponse.cte_status, item.cte_numero);
+
+                            //trazer o id do consultado para atualizar e tirar da fila com um update. 
+
                         }
 
                         objResponse.cod_entrega = item.cod_entrega;
-                        objResponse.cte_status = ((int)CTEEnums.STATUS_CTE_IL.Enviado).ToString();
+                        
+                        //objResponse.cte_status = ((int)CTEEnums.STATUS_CTE_IL.Enviado).ToString();
 
                         _Entregas_cte_transmitidoService.TreatRecordResponseRetRecepcao(objResponse);
                     }

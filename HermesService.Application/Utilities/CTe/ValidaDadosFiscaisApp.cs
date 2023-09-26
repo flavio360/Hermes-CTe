@@ -52,8 +52,10 @@ namespace HermesService.Application.Utilities.CTe
 
                 if (item.Remetente_cidade_cod_ibge == item.destinatario_cidade_cod_ibge)
                 {
-                    item.Erro = true;
-                    item.DescricaoErro = "Origem x destino mesma cidade, Nota fiscal de serviço";
+                    //item.Erro = true;
+                    item.Observacao = "Origem x destino mesma cidade, Nota fiscal de serviço";
+                    item.Cte_status = "100";
+                    item.Cte_tipo = "NFS";
                 }
 
                 if (item.Aliq_icms == 0 || item.Vlr_frete == 0 || item.Vlr_icms == 0 )

@@ -59,10 +59,11 @@ namespace HermesService.Infra.Data.Repositories.Entity.SICLONET
                        "	empresas EMIT ON EMIT.codempresa = REMETENTE.cod_empresa " +
                        "WHERE " +
                            "ENT_RECP.codentrega IS NOT NULL AND " +
-                           "ENT_RECP.data_recepcao >=  NOW() - interval '90 days' AND " +
+                           "ENT_RECP.data_recepcao >=  NOW() - interval '365 days' AND " +
                            "FILA.cod_entrega IS NULL AND " +
                            "(ERRO.erro IS FALSE OR ERRO.cod_entrega IS NULL )AND " +
-                           "ENT.data_cadastro >=  NOW() - interval '90 days' AND " +
+                           "ENT.data_cadastro >=  NOW() - interval '6 days' AND " +
+                           //"ENT.data_cadastro >=  NOW() - interval '365 days' AND " +
                            "REMETENTE.ativo = TRUE " +
                            "ORDER BY ENT_RECP.data_recepcao DESC";
             #endregion
@@ -95,5 +96,6 @@ namespace HermesService.Infra.Data.Repositories.Entity.SICLONET
                 throw new Exception("Problema na execução da classe \"GravaFilaCTe\" msg: " + ex.Message);
             }
         }
+
     }
 }

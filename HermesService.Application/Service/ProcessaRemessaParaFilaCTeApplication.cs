@@ -13,6 +13,7 @@ using Hermes.BLL.Ferramentas;
 using HermesService.Domain.Entity.SICLONET.PROC;
 using HermesService.Domain.Utilities;
 using System.Linq;
+using Dapper;
 
 namespace HermesService.Application.Service
 {
@@ -79,7 +80,8 @@ namespace HermesService.Application.Service
 
                         if (item.Erro == true)
                         {
-                            _FilaErroCteService.GravaErroCte(item.Cod_entrega, item.DescricaoErro);
+                            dataLog = dataLog + "-" + item.DescricaoErro;
+                            _FilaErroCteService.GravaErroCte(item.Cod_entrega, item.DescricaoErro, null);
                         }                        
                     }
 
@@ -110,7 +112,6 @@ namespace HermesService.Application.Service
                             {
                                 nCTe = (Convert.ToInt32(nCTe) + 1).ToString();
                             }
-
                         }
                         else
                         {
@@ -119,7 +120,6 @@ namespace HermesService.Application.Service
 
                         tratado.Cte_numero = nCTe;
                     }
-
 
                     //Gera chave CTe e Define CodCidadeIBGE 
                     foreach (var item in encomendas)
@@ -130,22 +130,24 @@ namespace HermesService.Application.Service
 
                         item.Cte_tipo = tpEmissao; //valor passado por paramentro para 
                         item.Cte_chave = nChaveCTe;
-                        item.destinatario_cidade_cod_ibge = _IEntregas_codigos_cidades_ibgeService.ObeterCodigoIBGE(item.destinatario_cidade,item.Destinatario_uf);
+                        item.destinatario_cidade_cod_ibge = _IEntregas_codigos_cidades_ibgeService.ObeterCodigoIBGE(item.destinatario_cidade.ToUpper(),item.Destinatario_uf);
 
                         if (item.destinatario_cidade_cod_ibge == null)
                         {
                             item.DescricaoErro = CTEEnums.INCOSISTENCIA_DADOS.CODIGO_IBGE_NULL.ToString();
-                            _FilaErroCteService.GravaErroCte(item.Cod_entrega, item.DescricaoErro);
+                            _FilaErroCteService.GravaErroCte(item.Cod_entrega, item.DescricaoErro, item.Cte_numero);
                             item.Erro = true;
                         }
                         item.Cte_modal = "57"; //rodoviário
 
                         item.Cfop = cfop.DefinirCFOP(item.Remetente_uf, item.Destinatario_uf);
-                        item.Cfop = "6108";
 
-
-
-
+                        if (item.Remetente_cidade_cod_ibge == item.destinatario_cidade_cod_ibge)
+                        {
+                            item.Cte_tipo = "NFS";
+                            item.Cte_status = "100";
+                        }
+                       //item.Cfop = "6108";
                     }
 
                     encomendas.RemoveAll(x => x.Erro == true);
@@ -174,6 +176,7 @@ namespace HermesService.Application.Service
                         else
                         {
                             calcEntrega.Observacao = "PROCESSAMENTO_CALCULO_( " + ret.Msg + " )" ;
+                            dataLog = dataLog + "-" + "PROCESSAMENTO_CALCULO_( " + ret.Msg + " )";
                             calcEntrega.Erro = true;
                         }
                     }
@@ -197,8 +200,24 @@ namespace HermesService.Application.Service
 
                                 var encomendaErro = MapperFactory.Mapper?.Map<List<F_Insere_Fila_CTe>, List<Entregas_cte_erro>>(dadosTratados);
 
-                                _FilaErroCteService.GravaFilaErroCte(encomendaErro);
-                            }
+                                //var cte_erro = new Entregas_cte_erro();
+
+                                var parametros = new DynamicParameters();
+
+
+                                foreach (var item in encomendaErro)
+                                {
+                                    // parametros.Add("id", funcNextVal);
+                                    parametros.Add("cod_entrega", item.Cod_entrega);
+                                    parametros.Add("cod_cte_id", Convert.ToInt32(item.Cod_cte_id));
+                                    parametros.Add("observacao_erro", item.Observacao_erro);
+                                    parametros.Add("data_inclusao", item.Data_inclusao);
+                                    parametros.Add("data_correcao", item.Data_correcao);
+                                    parametros.Add("usuario_correcao", item.Usuario_correcao);
+                                }
+
+                                _FilaErroCteService.GravaFilaErroCte(parametros);
+                             }
                         } 
                     }
 
@@ -207,11 +226,9 @@ namespace HermesService.Application.Service
                     //Popula tabelas da Fila CTe
 
                     if (dadosTratados.Count > 0)
-                    {
-                        
+                    {                        
                         _IF_Insere_Fila_CTeService.Insere_Fila_CTe(dadosTratados); 
                     }
-
                     dataLog = dataLog + "\n" + DateTime.Now.ToString();
                     WriteFile.WriteWSCTeLog("Queue", dataLog);
                 }

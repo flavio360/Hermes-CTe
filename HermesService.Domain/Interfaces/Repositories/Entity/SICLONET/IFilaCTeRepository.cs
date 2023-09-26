@@ -14,5 +14,7 @@ namespace HermesService.Domain.Interfaces.Repositories.Entity.SICLONET
         IEnumerable<Entregas> ConsultaPedidos(Entregas_cte_filiais_x_remetente clientes);
         void GravaFilaCTe(List<DadosCteDTO> dadosCtes);
 
+
+
     }
 }

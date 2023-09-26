@@ -13,5 +13,8 @@ namespace HermesService.Domain.Interfaces.Services
         string Consulta_entregas_cte_envio_ftp(string cod_entrega, string numero_cte);
 
         void Update_entregas_cte_envio_ftp(string cod_entrega, string numero_cte,string xml);
+
+        List<Entregas_cte_envio_ftp>  SelectPedidosAverbacao();
+
     }
 }

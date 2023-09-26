@@ -34,7 +34,7 @@ namespace HermesService.Domain.Service
             throw new NotImplementedException();
         }
 
-        public void UpdateEntregas_Fila_Ctes(Entregas_cte_dados_gerados_detalhe objEntrega)
+        public void UpdateEntregas_Fila_Ctes(Entregas_cte_dados_gerados_detalhe objEntrega, dynamic retSefaz)
         {
             using (DalSession dalSession = new DalSession())
             {
@@ -42,7 +42,7 @@ namespace HermesService.Domain.Service
                 try
                 {
                     _Entregas_fila_cte.InstanciarUnidade(UoW);
-                    _Entregas_fila_cte.UpdateEntregas_Fila_Ctes(objEntrega);
+                    _Entregas_fila_cte.UpdateEntregas_Fila_Ctes(objEntrega, retSefaz);
                 }
                 catch (Exception ex)
                 {

@@ -14,7 +14,10 @@ namespace HermesService.Domain.Service
     {
         #region interfaces e Construtores
         private readonly ICte_endereco_web_serviceRepository _Cte_endereco_web_service;
-        public Cte_endereco_web_serviceService(IEntityRepository repo, ICte_endereco_web_serviceRepository Cte_endereco_web_service) : base(repo)
+        public Cte_endereco_web_serviceService
+        (
+            IEntityRepository repo, ICte_endereco_web_serviceRepository Cte_endereco_web_service
+        ) : base(repo)
         {
             _Cte_endereco_web_service = Cte_endereco_web_service;
         }

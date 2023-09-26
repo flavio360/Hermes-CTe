@@ -26,11 +26,11 @@ namespace HermesService.Infra.Data.Repositories.Entity.SICLONET
             throw new NotImplementedException();
         }
 
-        public void UpdateEntregas_Fila_Ctes(Entregas_cte_dados_gerados_detalhe objEntrega)
+        public void UpdateEntregas_Fila_Ctes( Entregas_cte_dados_gerados_detalhe objEntrega, dynamic retSefaz)
         {
-            query = "update entregas_fila_cte set = {0} where cod_entrega = {1}";
+            query = "update entregas_fila_cte set cte_status = {0} where cod_entrega = {1}";
 
-            query = string.Format(query, objEntrega.Cte_status, objEntrega.Cod_entrega);
+            query = string.Format(query, objEntrega.Cte_status = "'2'", "'" + objEntrega.Cod_entrega +"'");
 
             SqlMapper.Query<Entregas>(Connection, query); 
         }

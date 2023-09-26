@@ -12,7 +12,7 @@ namespace HermesService.Infra.Data.Repositories.Entity.SICLONET
     {
         private string funcNextVal = "nextval('entregas_cte_erro_id_seq'::regclass)";
 
-        public void GravaFilaErroCte(List<Entregas_cte_erro> entregas_Cte_Erros)
+        public void GravaFilaErroCte(DynamicParameters entregas_Cte_Erros)
         {
             #region Query
             string query = "INSERT INTO " +
@@ -20,23 +20,23 @@ namespace HermesService.Infra.Data.Repositories.Entity.SICLONET
                            " VALUES " +
                                   "(@cod_entrega,@cod_cte_id,@observacao_erro, @data_inclusao, @data_correcao, @usuario_correcao)";
             #endregion  
-            var parametros = new DynamicParameters();
+            //var parametros = new DynamicParameters();
 
            
-            foreach (var item in entregas_Cte_Erros)
-            {
-               // parametros.Add("id", funcNextVal);
-                parametros.Add("cod_entrega", item.Cod_entrega);
-                parametros.Add("cod_cte_id", Convert.ToInt32( item.Cod_cte_id));
-                parametros.Add("observacao_erro", item.Observacao_erro);
-                parametros.Add("data_inclusao", item.Data_inclusao);
-                parametros.Add("data_correcao", null);
-                parametros.Add("usuario_correcao", item.Usuario_correcao);
-            }
+            //foreach (var item in entregas_Cte_Erros)
+            //{
+            //   // parametros.Add("id", funcNextVal);
+            //    parametros.Add("cod_entrega", item.Cod_entrega);
+            //    parametros.Add("cod_cte_id", Convert.ToInt32( item.Cod_cte_id));
+            //    parametros.Add("observacao_erro", item.Observacao_erro);
+            //    parametros.Add("data_inclusao", item.Data_inclusao);
+            //    parametros.Add("data_correcao", null);
+            //    parametros.Add("usuario_correcao", item.Usuario_correcao);
+            //}
 
             Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
 
-            var ret = SqlMapper.Query<Entregas_cte_erro>(Connection, query, parametros);
+            var ret = SqlMapper.Query<Entregas_cte_erro>(Connection, query, entregas_Cte_Erros);
         }
 
         public void GravaErroCte(string cod_entrega, string observacao_erro, string cod_cte_id = null)
@@ -51,7 +51,7 @@ namespace HermesService.Infra.Data.Repositories.Entity.SICLONET
             var parametros = new DynamicParameters();
 
             parametros.Add("cod_entrega", cod_entrega);
-            parametros.Add("cod_cte_id", cod_cte_id);
+            parametros.Add("cod_cte_id", Convert.ToInt32(cod_cte_id));
             parametros.Add("observacao_erro", observacao_erro);
             parametros.Add("data_inclusao", DateTime.Now);
             parametros.Add("data_correcao", null);
